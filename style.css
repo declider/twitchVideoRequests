@@ -10,6 +10,7 @@
     margin: 2px;
     border-radius: 10px;
     overflow: hidden;
+    white-space: nowrap;
 }
 
 body {
@@ -46,14 +47,18 @@ button {
     gap: 300px;
 }
 
+#info {
+    width: fit-content;
+    max-width: 60vw;
+}
+
 #queue {
     max-height: 60vh;
 }
 
 .order {
-    width: 400px;
+    width: 26vw;
     font-size: 15pt;
-    white-space: nowrap
 }
 
 #how, #how span {
