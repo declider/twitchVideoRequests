@@ -56,8 +56,12 @@ button {
     white-space: nowrap
 }
 
-
 #how, #how span {
     font-size: 14pt;
     border-radius: 2px;
+}
+
+#player {
+    width: 72vw;
+    height: calc(72vw/16*9);
 }
