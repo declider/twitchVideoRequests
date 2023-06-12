@@ -9,6 +9,7 @@
     text-align: center;
     margin: 2px;
     border-radius: 10px;
+    overflow: hidden;
 }
 
 body {
@@ -43,6 +44,10 @@ button {
     flex-direction: row;
     flex-wrap: nowrap;
     gap: 300px;
+}
+
+#queue {
+    max-height: 60vh;
 }
 
 .order {
