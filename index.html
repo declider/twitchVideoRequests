@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/comfy.js@latest/dist/comfy.min.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+</head>
+<body>
+
+    <div id="container">
+        <div id="player"></div>
+        <div id="queue">
+        </div>
+    </div>
+    
+    <div id="info">...</div>
+
+    <div id="settings">
+        <div class="word">
+            <label for="skipWord">Слово для скипа</label>
+            <input type="text" id="skipWord" name="skipWord" value="Em" onchange="updateSettings()"> <br>
+            <label for="saveWord">Слово для сейва</label>
+            <input type="text" id="saveWord" name="saveWord" value="ok" onchange="updateSettings()">
+        </div>
+
+        <div id="progress">
+            <span id="skipWordInfo">Em</span> = <span id="skipLengthInfo">0</span>,
+            <span id="saveWordInfo">ok</span> = <span id="saveLengthInfo">0</span><br>
+    
+            Набрано <span id="currentInfo">0</span> из <input id="goal" onchange="updateSettings()" type="number" value="25" placeholder="25">
+        </div>
+
+        <button onclick="skipVideo()">SKIP</button>
+        
+    </div>
+
+    <div id="how">Для заказа <span style="background-color: black;">видео ССЫЛКА</span> (без восклицательных знаков)</div>
+    
+    <script src="script.js"></script>
+    
+</body>
+</html>
