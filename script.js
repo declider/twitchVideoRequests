@@ -86,9 +86,9 @@ function messageHandler(user, message) {
         
         let yt_id
         if(link.includes("watch?v=")) {
-            yt_id = link.split("watch?v=").pop()
+            yt_id = link.split("watch?v=")[1].split("&")[0]
         } else if (link.includes("youtu.be")) {
-            yt_id = link.split("/").pop()
+            yt_id = link.split(".be/")[1].split("&")[0]
         } else {
             return
         }
