@@ -169,3 +169,6 @@ function onPlayerStateChange(event) {
 }
 
 updateInfo()
+window.onbeforeunload = function() {
+    return "Стоп"
+}
