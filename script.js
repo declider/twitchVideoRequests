@@ -8,16 +8,23 @@ let saveWord = "ok"
 
 let queue = []
 const queueEl = document.getElementById("queue")
+const autoskipCheck = document.getElementById("autoskip")
+const skipBtn = document.getElementById("skip")
 
-let currentOrder = {
-    user: "declider",
-    link: "https://www.youtube.com/watch?v=x23I8f9PwlI",
-    title: "Terraria Music - Day",
-    yt_id: "x23I8f9PwlI"
-}
+
 
 const params = (new URL(document.location)).searchParams
-const channel = params.get("channel") || "deciider"
+const channel = params.get("channel")
+if (!channel) {
+    alert("НЕ УКАЗАН ТВИЧ КАНАЛ (в ссылке добавить ?channel=КАНАЛ)")
+}
+
+let currentOrder = {
+    user: "Кто прочитал",
+    link: "https://www.youtube.com/watch?v=j5a0jTc9S10",
+    title: "тот лох",
+    yt_id: "j5a0jTc9S10"
+}
 
 ComfyJS.onChat = ( user, message, flags, self, extra ) => {
     messageHandler(user, message.trim())
@@ -25,25 +32,10 @@ ComfyJS.onChat = ( user, message, flags, self, extra ) => {
 
 ComfyJS.Init( channel )
 
-
-function createOrder(user, link, title, yt_id) {
-    let order = {
-        user: user,
-        link: link,
-        title: title,
-        yt_id: yt_id
-    }
-
-    queue.push(order)
-
-    let orderEl = document.createElement("div")
-    orderEl.innerText = `${user} - ${title}`
-    orderEl.className = "order"
-    queueEl.appendChild(orderEl)
-
-}
+let templates = ["youtube.com/watch?v=", "youtu.be/", "youtube.com/shorts/"]
 
 
+// В этом файле не используется, вызывается в html файле
 function updateSettings() {
     skipWord = document.getElementById("skipWord").value || "!skip"
     saveWord = document.getElementById("saveWord").value || "!save"
@@ -53,19 +45,12 @@ function updateSettings() {
 
 
 function updateInfo() {
-    document.getElementById("skipWordInfo").innerText = skipWord
-    document.getElementById("saveWordInfo").innerText = saveWord
+    document.getElementById("skipWordInfo").innerText   = skipWord
+    document.getElementById("saveWordInfo").innerText   = saveWord
     document.getElementById("skipLengthInfo").innerText = skippers.length
     document.getElementById("saveLengthInfo").innerText = savers.length
-    document.getElementById("currentInfo").innerText = skippers.length - savers.length
-    document.getElementById("info").innerText = `${currentOrder.user} - ${currentOrder.title}`
-}
-
-
-function clearEverything() {
-    skippers.length = 0
-    savers.length = 0
-    updateInfo()
+    document.getElementById("currentInfo").innerText    = skippers.length - savers.length
+    document.getElementById("info").innerText           = `${currentOrder.user} - ${currentOrder.title}`
 }
 
 
@@ -77,26 +62,45 @@ async function getTitle(link) {
 
 
 function messageHandler(user, message) {
+    message = message.replace("  "," ").replace(/[\uD800-\uDFFF]/gi, []).trim() // Невидимые символы в 7tv и чаттерино
     let parts = message.split(" ")
-    let command = parts[0] || undefined
+    if (parts.length > 1) { return } // Если это не "скипы/сейвы" и не заказы
+    let command = parts[0]
 
-    if (command=="видео") {
-        let link = parts[1] || undefined
-        if(!link) { return }
-        
+    if (templates.some((template) => message.includes(template))) {
+        let link = command
         let yt_id
         if(link.includes("watch?v=")) {
             yt_id = link.split("watch?v=")[1].split("&")[0]
         } else if (link.includes("youtu.be")) {
-            yt_id = link.split(".be/")[1].split("&")[0]
+            yt_id = link.split("youtu.be/")[1].split("?")[0]
+        } else if (link.includes("/shorts/")) {
+            yt_id = link.split("/shorts/")[1].split("?")[0]
         } else {
             return
         }
         
         if(!yt_id) { return }
 
+        if (queue.find((element) => element.yt_id === yt_id)) {
+            return
+        }
+
         getTitle(link).then(title => {
-            createOrder(user, link, title, yt_id)
+            let order = {
+                user: user,
+                link: link,
+                title: title,
+                yt_id: yt_id
+            }
+
+            queue.push(order)
+
+            let orderEl = document.createElement("div")
+            orderEl.innerText = `${user} - ${title}`
+            orderEl.className = "order"
+            orderEl.title = title
+            queueEl.appendChild(orderEl)
         })
 
 
@@ -111,9 +115,11 @@ function messageHandler(user, message) {
         skippers.push(user)
 
         let current = skippers.length - savers.length
-        console.log(current, goal)
         if (current >= goal) {
-            skipVideo()
+            skipBtn.style.background = "rgb(44, 146, 86)"
+            if (autoskipCheck.checked) {
+                skipVideo()
+            }
         }
         updateInfo()
 
@@ -137,27 +143,26 @@ function skipVideo() {
     currentOrder = queue.shift()
     queueEl.getElementsByClassName("order")[0].remove()
     player.loadVideoById(currentOrder.yt_id)
-    clearEverything()
+    skippers.length = 0
+    savers.length = 0
     updateInfo()
 }
 
 
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
-    height: '768',
-    width: '1366',
-    videoId: 'x23I8f9PwlI',
-    playerVars: {
-        rel: 0,
-        start: 0,
-        iv_load_policy: 3,
-        autoplay: 0,
-        playsinline: 1,
-        origin: "https://www.youtube.com"
-    },
-    events: {   
-        'onStateChange': onPlayerStateChange
-    }
+        videoId: 'j5a0jTc9S10',
+        playerVars: {
+            rel: 0,
+            start: 0,
+            iv_load_policy: 3,
+            autoplay: 0,
+            playsinline: 1,
+            origin: window.location.origin
+        },
+        events: {   
+            'onStateChange': onPlayerStateChange
+        }
     })
 }
 
@@ -170,5 +175,5 @@ function onPlayerStateChange(event) {
 
 updateInfo()
 window.onbeforeunload = function() {
-    return "Стоп"
+    return "о"
 }
