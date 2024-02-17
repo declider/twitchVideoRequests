@@ -10,7 +10,7 @@ let queue = []
 const queueEl = document.getElementById("queue")
 const autoskipCheck = document.getElementById("autoskip")
 const skipBtn = document.getElementById("skip")
-
+const randomCheck = document.getElementById("random")
 
 
 const params = (new URL(document.location)).searchParams
@@ -69,17 +69,9 @@ function messageHandler(user, message) {
 
     if (templates.some((template) => message.includes(template))) {
         let link = command
-        let yt_id
-        if(link.includes("watch?v=")) {
-            yt_id = link.split("watch?v=")[1].split("&")[0]
-        } else if (link.includes("youtu.be")) {
-            yt_id = link.split("youtu.be/")[1].split("?")[0]
-        } else if (link.includes("/shorts/")) {
-            yt_id = link.split("/shorts/")[1].split("?")[0]
-        } else {
-            return
-        }
-        
+        link = link.replace("/shorts/","/watch?v=")
+        link = link.replace("youtu.be/","youtube.com/watch?v=")
+        let yt_id = link.split("watch?v=")[1].split("&")[0]
         if(!yt_id) { return }
 
         if (queue.find((element) => element.yt_id === yt_id)) {
@@ -100,6 +92,7 @@ function messageHandler(user, message) {
             orderEl.innerText = `${user} - ${title}`
             orderEl.className = "order"
             orderEl.title = title
+            orderEl.dataset.ytid = yt_id
             queueEl.appendChild(orderEl)
         })
 
@@ -140,8 +133,17 @@ function messageHandler(user, message) {
 
 function skipVideo() {
     if(!queue.length) { return }
-    currentOrder = queue.shift()
-    queueEl.getElementsByClassName("order")[0].remove()
+    if (randomCheck.checked) {
+        let random = Math.floor(Math.random() * queue.length)
+        currentOrder = queue[random]
+        queue.splice(random, 1)
+        let yt_id = currentOrder.yt_id
+        queueEl.querySelector(`.order[data-ytid="${yt_id}"]`).remove()
+    } else {
+        currentOrder = queue.shift()
+        queueEl.getElementsByClassName("order")[0].remove()
+    }
+    skipBtn.style.background = "rgb(55, 82, 83)"
     player.loadVideoById(currentOrder.yt_id)
     skippers.length = 0
     savers.length = 0
