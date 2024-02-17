@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Заказ видео</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/comfy.js@latest/dist/comfy.min.js"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
@@ -11,7 +11,9 @@
 <body>
 
     <div id="container">
-        <div id="player"></div>
+        <div id="player-parent">
+            <div id="player"></div>
+        </div>
         <div id="queue">
         </div>
     </div>
@@ -20,9 +22,9 @@
 
     <div id="settings">
         <div class="word">
-            <label for="skipWord">Слово для скипа</label>
+            <label>Слово для скипа:</label>
             <input type="text" id="skipWord" name="skipWord" value="Em" onchange="updateSettings()"> <br>
-            <label for="saveWord">Слово для сейва</label>
+            <label>Слово для сейва:</label>
             <input type="text" id="saveWord" name="saveWord" value="ok" onchange="updateSettings()">
         </div>
 
@@ -32,13 +34,20 @@
     
             Набрано <span id="currentInfo">0</span> из <input id="goal" onchange="updateSettings()" type="number" value="25" placeholder="25">
         </div>
-
-        <button onclick="skipVideo()">SKIP</button>
+        <div id="skip-settings">
+            <button id="skip" onclick="skipVideo()">СКИП</button>
+            <div>
+                <label for="autoskip">Автоскип при сборе</label>
+                <input type="checkbox" id="autoskip" name="autoskip">
+            </div>
+            
+        </div>
+        
         
     </div>
 
-    <div id="how">Для заказа <span style="background-color: black;">видео ССЫЛКА</span> (без восклицательных знаков и поинтовых наград)</div>
-    
+    <div id="how">Для заказа видео просто скиньте ссылку на него в чат.</div>
+
     <div id="modal">
         <p>
             Этот "сайт" - временная замена другого, более качественного и богатого на функции, но пока что неработающего. Идея пренадлежит @Kozjar<br>
@@ -48,7 +57,7 @@
             <br>
         </p>
         
-        <button onclick="document.getElementById('modal').style.visibility = 'hidden'">Закрыть</button>
+        <button style="color: black;" onclick="document.getElementById('modal').style.visibility = 'hidden'">Закрыть</button>
     </div>
     
     <script src="script.js"></script>
