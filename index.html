@@ -34,31 +34,26 @@
     
             Набрано <span id="currentInfo">0</span> из <input id="goal" onchange="updateSettings()" type="number" value="25" placeholder="25">
         </div>
+        
         <div id="skip-settings">
-            <button id="skip" onclick="skipVideo()">СКИП</button>
+            
             <div>
-                <label for="autoskip">Автоскип при сборе</label>
+                <label for="autoskip" title="При достижении цели видео скипается автоматически.">Автоскип при сборе</label>
                 <input type="checkbox" id="autoskip" name="autoskip">
+            </div>
+            <div>
+                <label for="random" title="Следующим видео будет случайное из всего списка заказанного, а не следующее в очереди.">Случайный выбор</label>
+                <input type="checkbox" id="random" name="random">
             </div>
             
         </div>
+
+        <button id="skip" onclick="skipVideo()">СКИП</button>
         
         
     </div>
 
     <div id="how">Для заказа видео просто скиньте ссылку на него в чат.</div>
-
-    <div id="modal">
-        <p>
-            Этот "сайт" - временная замена другого, более качественного и богатого на функции, но пока что неработающего. Идея пренадлежит @Kozjar<br>
-            Здесь вряд ли будут глобальные обновления, а возможно не будет никаких.<br>
-            Как только оригинальный сайт заработает - здесь появится ссылка на него.<br>
-            Крайне рекомендую пользоваться именно оригиналом если есть возможность, а не этой кривой подделкой, сделанной на коленке за кратчайшее время, на которой вы сейчас находитесь.
-            <br>
-        </p>
-        
-        <button style="color: black;" onclick="document.getElementById('modal').style.visibility = 'hidden'">Закрыть</button>
-    </div>
     
     <script src="script.js"></script>
     
