@@ -139,7 +139,7 @@ label:hover {
     box-sizing: border-box;
     padding: 3vw;
     flex-direction: column;
-    line-height: 1.5vw;
-
+    font-size: 32pt;
+    text-wrap: wrap;
     /* display: none; */
 }
