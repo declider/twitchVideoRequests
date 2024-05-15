@@ -1,3 +1,6 @@
+# Неактуально
+Есть лучшая альтернатива - https://chat.vote/playlist/
+
 # twitchVideoRequests  
 Заказы видео от зрителей на твиче.  
 
