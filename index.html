@@ -37,12 +37,16 @@
         
         <div id="skip-settings">
             
+            <!-- <div>
+                <label for="autoplay" title="Автоматически включать воспроизведение нового видео.">Автовоспроизведение</label>
+                <input type="checkbox" id="autoplay" name="autoplay">
+            </div> -->
             <div>
-                <label for="autoskip" title="При достижении цели видео скипается автоматически.">Автоскип при сборе</label>
+                <label for="autoskip" title="Видео скипается автоматически когда оно кончается или когда набирается нужное количество скипов.">Автоскип</label>
                 <input type="checkbox" id="autoskip" name="autoskip">
             </div>
             <div>
-                <label for="random" title="Следующим видео будет случайное из всего списка заказанного, а не следующее в очереди.">Случайный выбор</label>
+                <label for="random" title="Следующим видео будет случайное из всего списка заказанного, а не следующее в очереди.">Случайный порядок</label>
                 <input type="checkbox" id="random" name="random">
             </div>
             
@@ -53,12 +57,13 @@
         
     </div>
 
-    <div id="how">Для заказа видео просто скиньте ссылку на него в чат.</div>
+    <div id="how">Для заказа YouTube видео просто скиньте ссылку на него в чат.</div>
 
-    <div id="modal">
+    <dialog open>
         Появилась лучшая альтернатива, пользуйтесь ей - <a href="https://chat.vote/playlist/">https://chat.vote/playlist/</a><br>
-        <button style="color: black;" onclick="document.getElementById('modal').style.visibility = 'hidden'">Закрыть</button>
-    </div>
+        Этот сайт вряд ли будет получать обновления, разве что фиксы разных багов.
+        <button style="color: black;" onclick="document.querySelector('dialog').close()">Закрыть</button>
+    </dialog>
     
     <script src="script.js"></script>
     
