@@ -7,6 +7,7 @@ let skipWord = "Em"
 let saveWord = "ok"
 
 let queue = []
+// const autoplay = document.getElementById("autoplay")
 const queueEl = document.getElementById("queue")
 const autoskipCheck = document.getElementById("autoskip")
 const skipBtn = document.getElementById("skip")
@@ -51,12 +52,14 @@ function updateInfo() {
     document.getElementById("saveLengthInfo").innerText = savers.length
     document.getElementById("currentInfo").innerText    = skippers.length - savers.length
     document.getElementById("info").innerText           = `${currentOrder.user} - ${currentOrder.title}`
+    document.getElementById("info").title               = currentOrder.title
 }
 
 
 async function getTitle(link) {
     const response = await fetch(`https://noembed.com/embed?dataType=json&url=${link}`)
     const result = await response.json()
+    console.log(result)
     return result.title
 }
 
@@ -71,6 +74,7 @@ function messageHandler(user, message) {
         let link = command
         link = link.replace("/shorts/","/watch?v=")
         link = link.replace("youtu.be/","youtube.com/watch?v=")
+        link = link.split("?",3).slice(0,2).join("?")
         let yt_id = link.split("watch?v=")[1].split("&")[0]
         if(!yt_id) { return }
 
@@ -109,7 +113,7 @@ function messageHandler(user, message) {
 
         let current = skippers.length - savers.length
         if (current >= goal) {
-            skipBtn.style.background = "rgb(44, 146, 86)"
+            skipBtn.style.background = "rgb(184, 21, 29)"
             if (autoskipCheck.checked) {
                 skipVideo()
             }
@@ -145,6 +149,9 @@ function skipVideo() {
     }
     skipBtn.style.background = "rgb(55, 82, 83)"
     player.loadVideoById(currentOrder.yt_id)
+    // if (autoplayCheck.checked) {
+    //     player.playVideo()
+    // }
     skippers.length = 0
     savers.length = 0
     updateInfo()
@@ -171,7 +178,9 @@ function onYouTubeIframeAPIReady() {
 
 function onPlayerStateChange(event) {
     if(event.data===0) {
-        skipVideo()
+        if (autoskipCheck.checked) {
+            skipVideo()
+        }
     }
 }
 
