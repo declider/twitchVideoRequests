@@ -40,22 +40,22 @@ label:hover {
 }
 
 #skip {
-    background: rgb(55, 82, 83);
-    /* background: rgb(44, 146, 86); */
+    background: rgb(97, 36, 39);
     border: none;
+    padding: 5px;;
 }
 
 #skip:hover {
-    background: rgb(92, 141, 143) !important;
+    background: rgb(88, 20, 23) !important;
 }
 
 #container {
     display: flex;
     flex: 3 1;
+    height: 82vh;
 }
 
 #player-parent {
-    height: 82vh;
     width: calc(82vh * 16 / 9);
     aspect-ratio: 16 / 9;
 }
@@ -72,6 +72,7 @@ label:hover {
     flex-grow: 1;
     width: 8vw;
     flex-shrink: 0;
+    max-height: 82vh;
 }
 
 #info {
@@ -94,11 +95,15 @@ label:hover {
     padding-inline: 10px;
 }
 
-#how, #how span {
+#how {
     font-size: 18pt;
     border-radius: 2px;
     font-weight: 500;
     text-align: left;
+    background-color: rgb(29, 29, 29);
+    padding: 10px;
+    border-radius: 5px;
+    width: min-content;
 }
 
 #progress {
@@ -124,22 +129,16 @@ label:hover {
     border-radius: 0.3vw;
 }
 
-#modal {
-    position: absolute;
+dialog[open] {
     top: 10vh;
     left: 10vw;
-    height: 80vh;
     width: 80vw;
     background-color: #0e0e0efa;
-    border-radius: 1vw;
     display: flex;
     text-align: left;
     align-items: center;
     justify-content: center;
-    box-sizing: border-box;
-    padding: 3vw;
     flex-direction: column;
     font-size: 32pt;
     text-wrap: wrap;
-    /* display: none; */
 }
