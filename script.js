@@ -75,6 +75,7 @@ function messageHandler(user, message) {
         link = link.replace("/shorts/","/watch?v=")
         link = link.replace("youtu.be/","youtube.com/watch?v=")
         link = link.split("?",3).slice(0,2).join("?")
+        link = link.split("&")[0] // очень не хочу использовать регулярки
         let yt_id = link.split("watch?v=")[1].split("&")[0]
         if(!yt_id) { return }
 
