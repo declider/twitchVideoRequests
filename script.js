@@ -59,7 +59,6 @@ function updateInfo() {
 async function getTitle(link) {
     const response = await fetch(`https://noembed.com/embed?dataType=json&url=${link}`)
     const result = await response.json()
-    console.log(result)
     return result.title
 }
 
